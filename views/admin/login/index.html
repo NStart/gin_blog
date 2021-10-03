@@ -1,0 +1,47 @@
+{{ define "admin/login/index" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .login_title{
+        font-size: 16px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .form_table td{
+        border-style: unset;
+    }
+    .submit_box{
+        text-align: center;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <form action="dologin" method="post">
+                <h1 class="login_title">登录</h1>
+                <table class="layui-table form_table">
+                    <tr>
+                        <td>用户名</td>
+                        <td><input type="text" name="name" class="name layui-input" ></td>
+                    </tr>
+                    <tr>
+                        <td>密码</td>
+                        <td><input type="password" name="password" class="password layui-input" ></td>
+                    </tr>
+                    <tr class="submit_box">
+                        <td colspan="2"><button class="layui-btn layui-btn-normal">登录</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+
+{{template "common/footer"}}
+
+{{ end }}

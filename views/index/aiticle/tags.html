@@ -1,0 +1,32 @@
+{{ define "article/tags" }}
+
+{{template "common/header" . }}
+
+<main class="main">
+    <div class="container">
+
+
+
+
+
+
+
+        <div class="post-warp tags">
+            <h2 class="post-title" style="text-align:right;padding-bottom:2em">-&nbsp;Tags&nbsp;-</h2>
+
+            <div class="tag-cloud-tags">
+
+                {{ range .tagsList }}
+                    <a href="/article/index?tags={{ .ID }}"> {{ .Name }} <small>({{ .Total }})</small></a>
+                {{ end }}
+            </div>
+
+
+        </div>
+
+    </div>
+</main>
+
+{{template "common/footer"}}
+
+{{ end }}

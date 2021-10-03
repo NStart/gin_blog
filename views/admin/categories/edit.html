@@ -1,0 +1,44 @@
+{{ define "admin/categories/edit" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .edit_categories{
+        font-size: 16px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .form_table td{
+        border-style: unset;
+    }
+    .submit_box{
+        text-align: center;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <form action="doedit" method="post" >
+                <input type="hidden" value="{{ .categories.ID}}" name="id" class="aiticleId">
+                <h1 class="edit_categories">编辑分类</h1>
+                <table class="layui-table form_table">
+                    <tr>
+                        <td>分类名</td>
+                        <td><input type="text" value="{{ .categories.Name }}" name="name" class="name layui-input" ></td>
+                    </tr>
+                    <tr class="submit_box">
+                        <td colspan="2"><button class="layui-btn layui-btn-normal">提交</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+
+{{template "common/footer"}}
+
+{{ end }}

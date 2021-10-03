@@ -1,0 +1,26 @@
+{{ define "index/index" }}
+
+{{template "common/header" . }}
+    <main class="main">
+        <div class="container">
+            <div class="intro">
+                <div class="avatar">
+                    <a href="/posts/"> <img src="/static/img/malong.png"> </a>
+                </div>
+
+                <h2 class="description">
+                    不问终点，全力以赴
+                </h2>
+
+                <div class="social-links">
+                    <a href="https://github.com/NStart" target="_blank" rel="me noopener"><i class="iconfont icon-github"></i></a>
+                    <a href="###" target="_blank" rel="me noopener"><i class="iconfont icon-twitter"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    {{template "common/footer"}}
+
+{{ end }}

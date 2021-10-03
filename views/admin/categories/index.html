@@ -1,0 +1,87 @@
+{{ define "admin/categories/index" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .add_cate_btn{
+        margin: 10px 0;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <h1>分类列表</h1>
+            <a href="add" class="add_cate_btn layui-btn layui-btn-sm">新增分类</a>
+
+            {{ range .categoriesList }}
+                <article class="archive-item">
+                    <a href="/ikebackend/categories/edit/?id={{ .ID }}" class="archive-item-link">
+                        {{ .Name }}
+                    </a>
+
+                    <span class="archive-item-date">
+                        <a cateId="{{ .ID }}" class="deleteBtn layui-btn layui-btn-sm layui-btn-danger">删除</a>
+                    </span>
+                    <span class="archive-item-date">
+                        <a href="edit?id={{ .ID }}" class="layui-btn layui-btn-sm">编辑</a>
+                    </span>
+                    <span class="archive-item-date">
+                        {{ .CreatedAt }}
+                    </span>
+                </article>
+            {{ end }}
+
+
+            <div id="kkpager"></div>
+
+        </div>
+
+    </div>
+</main>
+
+<link rel="stylesheet" type="text/css" href="/static/libs/jquery_page/style/kkpager_orange.css">
+<script src="/static/libs/jquery_page/js/kkpager.js"></script>
+<script src="/static/js/article.js"></script>
+<script type="text/javascript">
+    //init
+    $(function(){
+        generPageHtml({{ .totalPage }}, {{ .totalCount }});
+
+        $('.deleteBtn').click(function () {
+            var btn = $(this);
+            layer.confirm('确认删除?', function(index){
+                var cateId = btn.attr('cateId');
+                deleteCategories(cateId);
+            });
+        })
+
+
+    });
+
+    function deleteCategories(cateId){
+        $.ajax({
+            url: '/ikebackend/categories/delete?id='+cateId,
+            type: "get",
+            //dataType: "json",
+            cache: false,
+            data: {
+
+            },
+            success: function (data) {
+                if (data.Code == 1){
+                    alert(data.Msg);
+                    window.location.reload();
+                }else{
+                    alert(data.Msg);
+                    window.location.reload();
+                }
+            }
+        });
+    }
+</script>
+
+{{template "common/footer"}}
+
+{{ end }}

@@ -1,0 +1,31 @@
+{{ define "admin/common/error" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .error_box{
+        text-align: center;
+    }
+    .error_msg{
+        margin: 25px;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <div class="error_box">
+                <div class="error_msg">
+                    {{ .errorMsg }}
+                </div>
+                <button onclick="javascript:history.go(-1);" class="layui-btn layui-btn-sm">返回</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{{template "common/footer"}}
+
+{{ end }}

@@ -1,0 +1,64 @@
+{{ define "article/detail" }}
+
+{{template "common/header" . }}
+<main class="main">
+    <div class="container">
+
+        <article class="post-warp" itemscope itemtype="http://schema.org/Article">
+            <header class="post-header">
+                <h1 class="post-title" itemprop="name headline">{{ .article.Title }}</h1>
+                <div class="post-meta">
+                    Written by <a itemprop="name" href="###" rel="author">艾克</a> with ♥
+                    <span class="post-time">
+                on <time datetime="{{ .article.CreatedAt }}" itemprop="datePublished">{{ .article.CreatedAt }}</time>
+                </span>
+                    in
+                    <i class="iconfont icon-folder"></i>
+                    <span class="post-category">
+                        <a href="/posts?cateId={{ .oneCategories.ID }}"> {{ .oneCategories.Name }} </a>
+
+                </span>
+                </div>
+            </header>
+            <div class="post-content">
+                {{ .content }}
+            </div>
+            <div class="post-copyright">
+
+                <p class="copyright-item">
+                    <span>Author:</span>
+                    <span>艾克 </span>
+                </p>
+
+
+
+                <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href="###">https://{{ .domainName }}/article/detail/{{ .article.SeoLink}}</a>
+                </p>
+
+            </div>
+
+
+            <div class="post-tags">
+
+                <section>
+                    <a href="javascript:window.history.back();">back</a></span> ·
+                    <span><a href="/">home</a></span>
+                </section>
+            </div>
+
+            <div class="post-nav">
+
+<!--                <a href="/friends/" class="prev" rel="prev" title="友情链接"><i class="iconfont icon-left"></i>&nbsp;友情链接</a>-->
+
+
+            </div>
+        </article>
+    </div>
+</main>
+
+
+    {{template "common/footer"}}
+
+{{ end }}

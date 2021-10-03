@@ -1,0 +1,75 @@
+{{ define "admin/article/add" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .add_article{
+        font-size: 16px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .form_table td{
+        border-style: unset;
+    }
+    .submit_box{
+        text-align: center;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <form action="doadd" method="post">
+                <h1 class="add_article">添加文章</h1>
+                <table class="layui-table form_table">
+                    <tr>
+                        <td>SEO链接</td>
+                        <td><input type="text" name="seo_link" class="seo_link layui-input" ></td>
+                    </tr>
+                    <tr>
+                        <td>分类</td>
+                        <td>
+                            <select name="categories" class="categories layui-select">
+                                {{ range .categoriesList }}
+                                    <option value="{{ .ID }}">{{ .Name }}</option>
+                                {{ end }}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>标签</td>
+                        <td>
+                            <select name="tags" class="tags layui-select">
+                                {{ range .tagsList }}
+                                <option value="{{ .ID }}">{{ .Name }}</option>
+                                {{ end }}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>文章标题</td>
+                        <td><input type="text" name="title" class="title layui-input" ></td>
+                    </tr>
+                    <tr>
+                        <td>文章内容</td>
+                        <td><textarea name="content" id="editor_content" class="content layui-textarea"></textarea></td>
+                    </tr>
+                    <tr class="submit_box">
+                        <td colspan="2"><button class="layui-btn layui-btn-normal">提交</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+
+
+{{template "common/footer"}}
+
+<script src="/static/libs/ckeditor_4.16.2_full/ckeditor.js"></script>
+<script src="/static/js/article.js"></script>
+
+{{ end }}

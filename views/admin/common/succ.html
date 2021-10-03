@@ -1,0 +1,31 @@
+{{ define "admin/common/succ" }}
+
+{{template "admin/common/header" . }}
+
+<style>
+    .succ_box{
+        text-align: center;
+    }
+    .succ_msg{
+        margin: 25px;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+            <div class="succ_box">
+                <div class="succ_msg">
+                    {{ .succMsg }}
+                </div>
+                <button onclick="javascript:history.go(-1);" class="layui-btn layui-btn-sm">返回</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{{template "common/footer"}}
+
+{{ end }}

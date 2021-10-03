@@ -1,0 +1,47 @@
+{{ define "article/categories" }}
+
+{{template "common/header" . }}
+
+<main class="main">
+    <div class="container">
+
+
+        <div class="post-warp categories">
+            <h2 class="post-title" style="text-align:right;padding-bottom:2em">-&nbsp;Categories&nbsp;-</h2>
+
+
+            <div class="categories-card">
+
+                {{ range .categoriesList }}
+                <div class="card-item">
+                    <div class="categories" >
+                        <a href="/posts?cateId={{ .ID }}"><h3> <i class="iconfont icon-folder" style="padding-right: 3px"></i> {{ .Name }}  </h3> </a>
+
+                        {{ range .ArticleList }}
+                        <article class="archive-item">
+                            <a href="/posts/detail/{{ .SeoLink }}" class="archive-item-link">{{ .Title }}</a>
+                        </article>
+                        {{ end }}
+
+                        <span class="more-post">
+                            <a href="/posts?cateId={{ .ID }}" class="more-post-link">More  >></a>
+                        </span>
+
+                    </div>
+                </div>
+                {{ end }}
+
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</main>
+
+{{template "common/footer"}}
+
+{{ end }}
