@@ -39,7 +39,7 @@ func (article *Article) GetArticleList(pageIndex, pageSize, cateId, tagId int) (
 		db = db.Where("tags = ?", tagId)
 	}
 
-	err = db.Offset((pageIndex-1)*pageSize).Limit(pageSize).Find(&articleList).Error
+	err = db.Order("created_at desc").Offset((pageIndex-1)*pageSize).Limit(pageSize).Find(&articleList).Error
 	if err != nil{
 		return nil, iTotalCount, totalPage, err
 	}
