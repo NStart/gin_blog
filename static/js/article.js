@@ -99,8 +99,14 @@ function generPageHtml(totalPage,totalCount){
     });
 }
 
-$(function () {
+
+window.onload = function(){
     if ($('#editor_content').length >0 ){
         init_editor("editor_content");
     }
-})
+}
+// $(function () {
+//     if ($('#editor_content').length >0 ){
+//         init_editor("editor_content");
+//     }
+// })
