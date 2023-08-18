@@ -1,0 +1,47 @@
+{{ define "course/index" }}
+
+{{template "common/header" . }}
+
+<main class="main">
+    <div class="container">
+
+        <div class="post-warp archive">
+
+            {{ range .courseList }}
+            <article class="archive-item">
+                <a href="/chapter/list/{{ .ID }}" class="archive-item-link">
+                    {{ .CourseName }}
+                </a>
+
+                <span class="archive-item-date">
+                    {{ .CreatedAt }}
+                </span>
+            </article>
+            {{ end }}
+
+
+            <div id="kkpager"></div>
+
+        </div>
+
+    </div>
+</main>
+
+<link rel="stylesheet" type="text/css" href="/static/libs/jquery_page/style/kkpager_orange.css">
+<script src="/static/libs/jquery_page/js/kkpager.js"></script>
+<script src="/static/js/article.js"></script>
+<script type="text/javascript">
+
+
+    //init
+    $(function(){
+        generPageHtml({{ .totalPage }}, {{ .totalCount }});
+
+
+    });
+
+</script>
+
+{{template "common/footer"}}
+
+{{ end }}

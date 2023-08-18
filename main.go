@@ -41,6 +41,9 @@ func main() {
 	var articleController index.ArticleController
 	var courseController index.CourseController
 	r.GET("/courses", courseController.Courses)
+	r.GET("/chapter/list/:courseId", courseController.ChaperList)
+	r.GET("/course-article/list/:courseId/:chapterId", courseController.CourseArticleList)
+	r.GET("/course-article/detail/:articleId", courseController.ArticleDetail)
 	r.GET("/posts", articleController.Posts)
 	r.GET("/posts/detail/:seoLink", articleController.PostsDetail)
 	r.GET("/about", articleController.About)

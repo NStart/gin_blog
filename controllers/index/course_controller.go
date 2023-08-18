@@ -14,7 +14,7 @@ import (
 type CourseController struct {
 }
 
-func (c *CourseController) List(ct *gin.Context) {
+func (c *CourseController) Courses(ct *gin.Context) {
 	var err error
 	var totalCount, totalPage int
 
@@ -36,54 +36,70 @@ func (c *CourseController) List(ct *gin.Context) {
 	})
 }
 
-func (c *CourseController) Posts(ct *gin.Context) {
+func (c *CourseController) ChaperList(ct *gin.Context) {
 	var err error
 	var totalCount, totalPage int
-	cateId := ct.Query("cateId")
-	iCateId, _ := strconv.Atoi(cateId)
 
-	tagId := ct.Query("tagId")
-	iTagId, _ := strconv.Atoi(tagId)
-
+	courseId := ct.Param("courseId")
+	iCourseId, _ := strconv.Atoi(courseId)
 	pageIndex := ct.Query("pno")
 	iPageIndex, _ := strconv.Atoi(pageIndex)
 
-	article := models.Article{}
-	articleList := make([]*models.Article, config.PAGE_SIZE)
-	articleList, totalCount, totalPage, err = article.GetArticleList(iPageIndex, config.PAGE_SIZE, iCateId, iTagId)
+	courseChapter := models.CourseChapter{}
+	chapterList := make([]*models.CourseChapter, config.PAGE_SIZE)
+	chapterList, totalCount, totalPage, err = courseChapter.GetChpaterList(iCourseId, iPageIndex, config.PAGE_SIZE)
 	var resultPage helpers.ResultPage
 	if err != nil {
 		resultPage.AdminErrorPage(ct, helpers.LAN_DB_ERROR)
 		return
 	}
-	resultPage.RenderHtml(ct, http.StatusOK, "article/posts", gin.H{
-		"articleList": articleList,
+	resultPage.RenderHtml(ct, http.StatusOK, "course/chapter", gin.H{
+		"chapterList": chapterList,
 		"totalCount":  totalCount,
 		"totalPage":   totalPage,
 	})
 }
 
-func (c *CourseController) PostsDetail(ct *gin.Context) {
+func (c *CourseController) CourseArticleList(ct *gin.Context) {
 	var err error
-	seoLink := ct.Param("seoLink")
-	article := models.Article{}
-	err = article.GetOneArticleBySeoLink(seoLink, &article)
+	var totalCount, totalPage int
+
+	courseId := ct.Param("courseId")
+	iCourseId, _ := strconv.Atoi(courseId)
+	chapterId := ct.Param("chapterId")
+	iChapterId, _ := strconv.Atoi(chapterId)
+	pageIndex := ct.Query("pno")
+	iPageIndex, _ := strconv.Atoi(pageIndex)
+
+	courseArticle := models.CourseArticle{}
+	aiticleList := make([]*models.CourseArticle, config.PAGE_SIZE)
+	aiticleList, totalCount, totalPage, err = courseArticle.GetArticleList(iCourseId, iChapterId, iPageIndex, config.PAGE_SIZE)
+	var resultPage helpers.ResultPage
+	if err != nil {
+		resultPage.AdminErrorPage(ct, helpers.LAN_DB_ERROR)
+		return
+	}
+	resultPage.RenderHtml(ct, http.StatusOK, "course/article", gin.H{
+		"aiticleList": aiticleList,
+		"totalCount":  totalCount,
+		"totalPage":   totalPage,
+	})
+}
+
+func (c *CourseController) ArticleDetail(ct *gin.Context) {
+	var err error
+	articleId := ct.Param("articleId")
+	iArticleId, _ := strconv.Atoi(articleId)
+	article := models.CourseArticle{}
+	err = article.GetOneArticleById(iArticleId, &article)
 	var resultPage helpers.ResultPage
 	if err != nil {
 		resultPage.FrontkendErrorPage(ct, helpers.LAN_DB_ERROR)
 		return
 	}
 
-	var oneCategories models.Categories
-	err = oneCategories.GetOneCategoryById(article.Categories, &oneCategories)
-	if err != nil {
-		resultPage.FrontkendErrorPage(ct, helpers.LAN_DB_ERROR)
-		return
-	}
-
-	resultPage.RenderHtml(ct, http.StatusOK, "article/detail", gin.H{
-		"article":       article,
-		"content":       template.HTML(article.Content),
-		"oneCategories": oneCategories,
+	resultPage.RenderHtml(ct, http.StatusOK, "course/article_detail", gin.H{
+		"article": article,
+		"content": template.HTML(article.ArticleContent),
 	})
 }
