@@ -39,7 +39,8 @@ func main() {
 	r.GET("/index", indexController.Index)
 
 	var articleController index.ArticleController
-	//r.GET("/courses", courseController.Courses)
+	var courseController index.CourseController
+	r.GET("/courses", courseController.Courses)
 	r.GET("/posts", articleController.Posts)
 	r.GET("/posts/detail/:seoLink", articleController.PostsDetail)
 	r.GET("/about", articleController.About)
