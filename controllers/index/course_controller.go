@@ -22,8 +22,9 @@ func (c *CourseController) Courses(ct *gin.Context) {
 	iPageIndex, _ := strconv.Atoi(pageIndex)
 
 	course := models.Course{}
-	courseList := make([]*models.Course, config.PAGE_SIZE)
-	courseList, totalCount, totalPage, err = course.GetCourseList(iPageIndex, config.PAGE_SIZE)
+	listSize := 100
+	courseList := make([]*models.Course, listSize)
+	courseList, totalCount, totalPage, err = course.GetCourseList(iPageIndex, listSize)
 	var resultPage helpers.ResultPage
 	if err != nil {
 		resultPage.AdminErrorPage(ct, helpers.LAN_DB_ERROR)

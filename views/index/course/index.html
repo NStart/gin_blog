@@ -2,25 +2,40 @@
 
 {{template "common/header" . }}
 
+<style>
+    #all-course li {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 12px;
+    height: 34px;
+    line-height: 34px;
+    padding: 0px 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+a {
+    text-decoration: none;
+}
+#all-course a {
+    color: #007dbb;
+}
+</style>
+
 <main class="main">
     <div class="container">
 
-        <div class="post-warp archive">
+        <div class="post-warp archive" id="all-course">
             <h1>教程列表</h1>
             {{ range .courseList }}
-            <article class="archive-item">
-                <a href="/chapter/list/{{ .ID }}" class="archive-item-link">
+            <li>
+                <a href="/chapter/list/{{ .ID }}" class="">
                     {{ .CourseName }}
                 </a>
-
-                <span class="archive-item-date">
-                    {{ .CreatedAt }}
-                </span>
-            </article>
+            </li>
             {{ end }}
 
 
-            <div id="kkpager"></div>
+            <!-- <div id="kkpager"></div> -->
 
         </div>
 
