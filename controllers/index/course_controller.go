@@ -75,6 +75,10 @@ func (c *CourseController) CourseArticleList(ct *gin.Context) {
 	courseArticle := models.CourseArticle{}
 	aiticleList := make([]*models.CourseArticle, config.PAGE_SIZE)
 	aiticleList, totalCount, totalPage, err = courseArticle.GetArticleList(iCourseId, iChapterId, iPageIndex, config.PAGE_SIZE)
+	if totalCount == 0 {
+		iChapterId = 0
+		aiticleList, totalCount, totalPage, err = courseArticle.GetArticleList(iCourseId, iChapterId, iPageIndex, config.PAGE_SIZE)
+	}
 	var resultPage helpers.ResultPage
 	if err != nil {
 		resultPage.AdminErrorPage(ct, helpers.LAN_DB_ERROR)
