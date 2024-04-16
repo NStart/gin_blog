@@ -81,7 +81,14 @@ func (courseArticle *CourseArticle) GetArticleList(courseId, chapterId, pageInde
 
 	var totalCount int64
 	var iTotalCount int
-	err = db.Model(CourseArticle{}).Where("course_id = ? and chapter_id = ? ", courseId, chapterId).Count(&totalCount).Error
+
+	if courseId != 0 {
+		db = db.Where("course_id = ?", courseId)
+	}
+	if chapterId != 0 {
+		db = db.Where("chapter_id = ?", chapterId)
+	}
+	err = db.Model(CourseArticle{}).Count(&totalCount).Error
 	iTotalCount = int(totalCount)
 
 	totalPage := int(math.Ceil(float64(iTotalCount) / float64(pageSize)))
@@ -91,12 +98,21 @@ func (courseArticle *CourseArticle) GetArticleList(courseId, chapterId, pageInde
 	}
 
 	fmt.Println(courseId)
-	err = db.Where("course_id = ? and chapter_id = ? ", courseId, chapterId).Order("created_at desc").Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&articleList).Error
-	fmt.Println(err, articleList)
+
+	if courseId != 0 {
+		db = db.Where("course_id = ?", courseId)
+	}
+	if chapterId != 0 {
+		db = db.Where("chapter_id = ?", chapterId)
+	}
+
+	err = db.Order("created_at desc").Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&articleList).Error
+	//err = db.Where("course_id = ? and chapter_id = ? ", courseId, chapterId).Order("created_at desc").Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&articleList).Error
+	//fmt.Println(err, articleList)
 	if err != nil {
 		return nil, iTotalCount, totalPage, err
 	}
-	fmt.Printf("%+v %+v", articleList, pageSize)
+	//fmt.Printf("%+v %+v", articleList, pageSize)
 	return articleList, iTotalCount, totalPage, nil
 }
 

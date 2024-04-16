@@ -3,17 +3,18 @@ package models
 import (
 	"errors"
 	"fmt"
-	"gorm.io/gorm"
 	"math"
+
+	"gorm.io/gorm"
 )
 
 type Article struct {
 	BaseModel
-	SeoLink string `gorm:"type:varchar(100);unique;not null"`
-	Categories int `gorm:"not null"`
-	Tags int `gorm:"not null"`
-	Title string `gorm:"type:varchar(100);not null"`
-	Content string `gorm:"not null"`
+	SeoLink    string `gorm:"type:varchar(100);unique;not null"`
+	Categories int    `gorm:"not null"`
+	Tags       int    `gorm:"not null"`
+	Title      string `gorm:"type:varchar(100);not null"`
+	Content    string `gorm:"not null"`
 }
 
 func (article *Article) GetArticleList(pageIndex, pageSize, cateId, tagId int) ([]*Article, int, int, error) {
@@ -28,22 +29,22 @@ func (article *Article) GetArticleList(pageIndex, pageSize, cateId, tagId int) (
 
 	totalPage := int(math.Ceil(float64(iTotalCount) / float64(pageSize)))
 
-	if err != nil{
+	if err != nil {
 		return nil, iTotalCount, totalPage, err
 	}
 
-	if cateId != 0{
+	if cateId != 0 {
 		db = db.Where("categories = ?", cateId)
 	}
-	if tagId != 0{
+	if tagId != 0 {
 		db = db.Where("tags = ?", tagId)
 	}
 
-	err = db.Order("created_at desc").Offset((pageIndex-1)*pageSize).Limit(pageSize).Find(&articleList).Error
-	if err != nil{
+	err = db.Order("created_at desc").Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&articleList).Error
+	if err != nil {
 		return nil, iTotalCount, totalPage, err
 	}
-	fmt.Printf("%+v %+v", articleList, pageSize)
+	//fmt.Printf("%+v %+v", articleList, pageSize)
 	return articleList, iTotalCount, totalPage, nil
 }
 
@@ -55,14 +56,14 @@ func (article *Article) CheckArticleExist(seoLink string) (bool, error) {
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		fmt.Println("查询不到数据")
-		return false,nil
+		return false, nil
 	} else if err != nil {
 		//如果err不等于record not found错误，又不等于nil，那说明sql执行失败了。
 		fmt.Println("查询失败", err)
-		return false,err
+		return false, err
 	}
 	fmt.Println(article)
-	return true,nil
+	return true, nil
 }
 
 func (article *Article) GetArticleCountBytag(tagId int) (int, error) {
@@ -114,7 +115,7 @@ func (article *Article) EditArticle(id int, articleData *Article) bool {
 	data["content"] = articleData.Content
 
 	err = db.Model(&Article{}).Where("id = ?", id).Updates(data).Error
-	if err != nil{
+	if err != nil {
 		return false
 	}
 	return true
@@ -123,10 +124,8 @@ func (article *Article) EditArticle(id int, articleData *Article) bool {
 func (article *Article) DeleteArticleById(id int) bool {
 	db := GetDB()
 	err := db.Where("id = ?", id).Delete(&Article{}).Error
-	if err != nil{
+	if err != nil {
 		return false
 	}
 	return true
 }
-
-

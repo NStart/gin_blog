@@ -49,6 +49,7 @@ func main() {
 	r.GET("/about", articleController.About)
 	r.GET("/categories", articleController.Categories)
 	r.GET("/tags", articleController.Tags)
+	r.GET("/search", articleController.Search)
 
 	var adminLogin admin.LoginController
 	var adminArticle admin.ArticleController

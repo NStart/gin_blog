@@ -68,7 +68,12 @@ function generPageHtml(totalPage,totalCount){
             if (cate_id){
                 window.location.href='?cate_id='+cate_id+'&pno='+n
             }else{
-                window.location.href='?'+'&pno='+n
+                var keyword = $('.keyword').val()
+                if (!keyword) {
+                    window.location.href='?'+'&pno='+n
+                } else {
+                    window.location.href='?'+'&pno='+n+'&keyword='+keyword
+                }
             }
 
             return false;
